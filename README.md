@@ -29,7 +29,7 @@ Este repositório contém a implementação prática do processo de geração au
 ---
 ## Metodologia e Fluxo de Trabalho
 
-Toda a pipeline foi desenvolvida utilizando exclusivamente as ferramentas nativas e o Compositor de Nós do *Blender 2.83* com o motor de renderização Cycles.
+Todo o pipeline foi desenvolvido utilizando exclusivamente as ferramentas nativas e o Compositor de Nós do *Blender 2.83* com o motor de renderização Cycles.
 
 **A. Configuração da Cena e Atribuição de Índices**
 
@@ -51,7 +51,7 @@ A composição dos nós foi estruturada para permitir a exportação simultânea
 
 - *Nó Render Layers:* Fornece as saídas de cor (`Image`) e do canal de índices (`IndexOB`).
 
-- *Nó Math (Divide):* Divide a saída `IndexOB` por `65535` para normalização em escala de cinza de 16 bits (permitindo representar até 65.536 objetos únicos).
+- *Nó Math (Divide):* Divide a saída `IndexOB` por `65535` para normalização em escala de cinza de 8/16 bits (permitindo representar até 65.536 objetos únicos).
 
 - *Nós ID Mask:* Filtram a imagem e extraem máscaras binárias limpas (sem anti-aliasing) para cada objeto com base nos índices `1`, `10000` e `20000`.
 
@@ -62,7 +62,7 @@ A composição dos nós foi estruturada para permitir a exportação simultânea
 
 - A extração de máscaras via canal IndexOB garante limites de pixel exatos sem contaminação por anti-aliasing, essencial para o treinamento de modelos de IA.
 
-- O uso de formatos de 16 bits permite escalar a criação de datasets sintéticos para simulações complexas com milhares de instâncias.
+- O uso de formatos de 8/16 bits permite escalar a criação de datasets sintéticos para simulações complexas com milhares de instâncias.
 
 - A exportação via nó File Output automatiza 100% da criação do dataset no próprio processo de renderização do Blender.
 ---
